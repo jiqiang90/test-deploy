@@ -15,13 +15,12 @@ jobs:
       name: DEPLOYMENT
     env:
       SUBQL_ACCESS_TOKEN: ${{ secrets.SUBQL_ACCESS_TOKEN }}
-      ENDPOINT: ${{ secrets.ENDPOINT }}
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js environment
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 16
       - run: yarn
       - name: Codegen
         run: yarn codegen
@@ -31,4 +30,4 @@ jobs:
         run: echo ${{github.repository}}
       - name: Publish and Deploy
         run: |
-          sh .github/scripts/publish-deploy.sh -o ${{github.repository}} -p ${{github.event.inputs.projectName}} -e ${{secrets.ENDPOINT}}
+          sh .github/workflows/scripts/publish-deploy.sh -o ${{github.repository}} -p ${{github.event.inputs.projectName}}
